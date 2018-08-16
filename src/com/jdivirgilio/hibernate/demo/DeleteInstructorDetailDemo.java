@@ -24,7 +24,7 @@ public class DeleteInstructorDetailDemo {
 			session.beginTransaction();
 
 			// get the instructor detail object
-			int id = 2; // checked via MySQL workbench;
+			int id = 3; // checked via MySQL workbench;
 			InstructorDetail detail = session.get(InstructorDetail.class, id);
 
 			// print the instructor detail
@@ -33,7 +33,9 @@ public class DeleteInstructorDetailDemo {
 			// print the associated instructor
 			System.out.println("Instructor: " + detail.getInstructor());
 			
-			// Delete it
+			// remove the associated object reference...break the bi-directional link
+			// without this you get a stack strace saying it will be re-saved (instructor detail)
+			detail.getInstructor().setInstructorDetail(null);
 			session.delete(detail);
 
 			session.getTransaction().commit();

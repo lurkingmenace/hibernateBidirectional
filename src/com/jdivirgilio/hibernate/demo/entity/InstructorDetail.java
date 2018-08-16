@@ -37,7 +37,10 @@ public class InstructorDetail {
 	private String hobby;
 
 	// This sets up a bi-directional relationship without changing the schema
-	@OneToOne(mappedBy="instructorDetail", cascade=CascadeType.ALL)
+	// leaving out CascadeType.DELETE will not allow the instructor to get deleted also
+	@OneToOne(mappedBy="instructorDetail", 
+			cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+
 	private Instructor instructor;
 	
 	public InstructorDetail() {
