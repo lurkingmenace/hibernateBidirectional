@@ -20,20 +20,28 @@ public class GetInstructorDetailDemo {
 
 
 		Session session = factory.getCurrentSession();
-		session.beginTransaction();
-		
-		// get the instructor detail object
-		int id = 2; // checked via MySQL workbench;
-		InstructorDetail detail =
-				session.get(InstructorDetail.class, id);
-		
-		// print the instructor detail
-		System.out.println("Instructor Detail: " + detail);
-				
-		// print the associated instructor
-		System.out.println("Instructor: " + detail.getInstructor());
-		
-		session.getTransaction().commit();
-	
+		try {
+			session.beginTransaction();
+
+			// get the instructor detail object
+			int id = 999; // checked via MySQL workbench;
+			InstructorDetail detail = session.get(InstructorDetail.class, id);
+
+			// print the instructor detail
+			System.out.println("Instructor Detail: " + detail);
+
+			// print the associated instructor
+			System.out.println("Instructor: " + detail.getInstructor());
+
+			session.getTransaction().commit();
+
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+			factory.close();
+		}
 	}
 }
